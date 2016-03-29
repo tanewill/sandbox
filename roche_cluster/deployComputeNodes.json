@@ -53,7 +53,7 @@
     },
     "templateLocation": {
       "type": "string",
-      "defaultValue": "https://raw.githubusercontent.com/grandparoach/NewCluster/namd/"
+      "defaultValue": "https://github.com/tanewill/tanewill/blob/master/roche_cluster/"
     },
     "location": {
       "type": "string",
@@ -61,7 +61,7 @@
     },
     "adminUsername": {
       "type": "string",
-      "defaultValue": "sroach"
+      "defaultValue": "tanewill"
     },
     "masterHostName": {
       "type": "string",
@@ -73,7 +73,7 @@
     },
     "finaldeployScriptURI": {
       "type": "string",
-      "defaultValue": "https://raw.githubusercontent.com/grandparoach/NewCluster/namd/finaldeploy.sh"
+      "defaultValue": "https://github.com/tanewill/tanewill/blob/master/roche_cluster/finaldeploy.sh"
     },
     "adminPassword": {
       "type": "securestring"
