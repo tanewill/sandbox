@@ -1,0 +1,133 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01-preview/deploymentTemplate.json",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "uniquePrefix": {
+      "type": "string",
+      "defaultValue": "namd"
+    },
+    "numberOfSAs": {
+      "type": "int"
+    },
+    "instanceCountPerSA": {
+      "type": "int"
+    },
+    "vmSize": {
+      "type": "string",
+      "defaultValue": "Standard_A1",
+      "allowedValues": [
+        "Standard_A1",
+        "Standard_A8",
+        "Standard_A9"
+      ],
+      "metadata": {
+        "description": "Size of the VMs to be used for actual computation."
+      }
+    },
+    "OSType": {
+      "type": "string",
+      "defaultValue": "Linux",
+      "allowedValues": [
+        "Linux",
+        "Windows"
+      ],
+      "metadata": {
+        "description": "Compute OS Type"
+      }
+    },
+    "blobName": {
+      "type": "string",
+      "defaultValue": "updatedCentOS71rdma-osDisk.vhd"
+    },
+    "vnetResourceGroup": {
+      "type": "string",
+      "defaultValue": "networks"
+    },
+    "vnetName": {
+      "type": "string",
+      "defaultValue": "namd-vnet"
+    },
+    "subnetName": {
+      "type": "string",
+      "defaultValue": "Subnet-1"
+    },
+    "templateLocation": {
+      "type": "string",
+      "defaultValue": "https://raw.githubusercontent.com/grandparoach/NewCluster/namd/"
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "West US"
+    },
+    "adminUsername": {
+      "type": "string",
+      "defaultValue": "sroach"
+    },
+    "masterHostName": {
+      "type": "string",
+      "defaultValue": "nfsnamdvm"
+    },
+    "hpcUserName": {
+      "type": "string",
+      "defaultValue": "hpc"
+    },
+    "finaldeployScriptURI": {
+      "type": "string",
+      "defaultValue": "https://raw.githubusercontent.com/grandparoach/NewCluster/namd/finaldeploy.sh"
+    },
+    "adminPassword": {
+      "type": "securestring"
+    }
+  },
+  "variables": {
+    "baseTemplateUri": "[concat(parameters('templateLocation'), 'basedeployment.json')]",
+    "availabilitySetName": "[concat(parameters('uniquePrefix'), 'av')]",
+    "location": "[resourceGroup().location]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Compute/availabilitySets",
+      "name": "[variables('availabilitySetName')]",
+      "apiVersion": "2015-05-01-preview",
+      "location": "[parameters('location')]"
+    },
+    {
+      "name": "[concat('clusterSet', copyindex())]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "dependsOn": [
+        "[concat('Microsoft.Compute/availabilitySets/', variables('availabilitySetName'))]"
+      ],
+      "copy": {
+        "name": "deploymentLoop",
+        "count": "[parameters('numberOfSAs')]"
+      },
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('baseTemplateUri')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "uniquePrefix": { "value": "[parameters('uniquePrefix')]" },
+          "clusterName": { "value": "[concat(parameters('uniquePrefix'), padLeft(copyindex(), 2, '0'))]" },
+          "sourceImageURI": { "value": "[concat('https://namdtest', copyIndex(1), 'sa.blob.core.windows.net/vhds/',parameters('blobName'))]" },
+          "baseVHDURI": { "value": "[concat('https://namdtest', copyIndex(1), 'sa.blob.core.windows.net/vhd/')]" },
+          "instanceCountPerSA": { "value": "[parameters('instanceCountPerSA')]" },
+          "vmSize": { "value": "[parameters('vmSize')]" },
+          "OSType": { "value": "[parameters('OSType')]" },
+          "vnetName": { "value": "[parameters('vnetName')]" },
+          "vnetResourceGroup": { "value": "[parameters('vnetResourceGroup')]" },
+          "subnetName": { "value": "[parameters('subnetName')]" },
+          "location": { "value": "[parameters('location')]" },
+          "masterHostName": { "value": "[parameters('masterHostName')]" },
+          "hpcUserName": { "value": "[parameters('hpcUserName')]" },
+          "finaldeployScriptURI": { "value": "[parameters('finaldeployScriptURI')]" },
+          "adminUsername": { "value": "[parameters('adminUsername')]" },
+          "adminPassword": { "value": "[parameters('adminPassword')]" }
+        }
+      }
+    }
+  ]
+}
+
