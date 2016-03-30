@@ -4,7 +4,7 @@
   "parameters": {
     "uniquePrefix": {
       "type": "string",
-      "defaultValue": "namd"
+      "defaultValue": "tester"
     },
     "numberOfSAs": {
       "type": "int"
@@ -37,7 +37,7 @@
     },
     "blobName": {
       "type": "string",
-      "defaultValue": "updatedCentOS71rdma-osDisk.vhd"
+      "defaultValue": "modifiedcentos71.vhd"
     },
     "vnetResourceGroup": {
       "type": "string",
@@ -45,11 +45,11 @@
     },
     "vnetName": {
       "type": "string",
-      "defaultValue": "namd-vnet"
+      "defaultValue": "testcluster-vnet"
     },
     "subnetName": {
       "type": "string",
-      "defaultValue": "Subnet-1"
+      "defaultValue": "testcluster-subnet"
     },
     "templateLocation": {
       "type": "string",
@@ -57,15 +57,15 @@
     },
     "location": {
       "type": "string",
-      "defaultValue": "West US"
+      "defaultValue": "Japan East"
     },
     "adminUsername": {
       "type": "string",
-      "defaultValue": "tanewill"
+      "defaultValue": "azureuser"
     },
     "masterHostName": {
       "type": "string",
-      "defaultValue": "nfsnamdvm"
+      "defaultValue": "testcluster-HN"
     },
     "hpcUserName": {
       "type": "string",
@@ -111,8 +111,8 @@
         "parameters": {
           "uniquePrefix": { "value": "[parameters('uniquePrefix')]" },
           "clusterName": { "value": "[concat(parameters('uniquePrefix'), padLeft(copyindex(), 2, '0'))]" },
-          "sourceImageURI": { "value": "[concat('https://namdtest', copyIndex(1), 'sa.blob.core.windows.net/vhds/',parameters('blobName'))]" },
-          "baseVHDURI": { "value": "[concat('https://namdtest', copyIndex(1), 'sa.blob.core.windows.net/vhd/')]" },
+          "sourceImageURI": { "value": "[concat('https://testclusterstorage', copyIndex(1), '.blob.core.windows.net/vhds/',parameters('blobName'))]" },
+          "baseVHDURI": { "value": "[concat('https://testclusterstorage', copyIndex(1), '.blob.core.windows.net/vhd/')]" },
           "instanceCountPerSA": { "value": "[parameters('instanceCountPerSA')]" },
           "vmSize": { "value": "[parameters('vmSize')]" },
           "OSType": { "value": "[parameters('OSType')]" },
@@ -130,4 +130,3 @@
     }
   ]
 }
-
