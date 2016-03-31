@@ -2,6 +2,7 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+
     "adminUsername": {
       "type": "string",
       "defaultValue": "azureuser",
@@ -153,6 +154,9 @@
         "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
       ],
       "properties": {
+        "parameters": {
+          "finaldeployScriptURI": { "value": "https://raw.githubusercontent.com/tanewill/tanewill/master/QuickCluster/finaldeploy.sh" }
+        }
         "hardwareProfile": {
           "vmSize": "[variables('vmSize')]"
         },
