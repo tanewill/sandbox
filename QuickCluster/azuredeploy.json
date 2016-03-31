@@ -217,7 +217,8 @@
         "type": "CustomScriptForLinux",
         "typeHandlerVersion": "1.4",
         "settings": {
-          "fileUris": [ concat("https://raw.githubusercontent.com/tanewill/tanewill/master/QuickCluster/",variables('executeScript'))
+          "fileUris": [
+            "[concat('https://raw.githubusercontent.com/tanewill/tanewill/master/QuickCluster/',variables('executeScript'))]"
           ],
           "commandToExecute": "[concat('bash ',variables('executeScript'),' ',variables('vmName'),' ', parameters('adminUsername'))]"
         }
