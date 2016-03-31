@@ -73,7 +73,8 @@
     "virtualNetworkName": "[concat(parameters('uniquePrefix'),'MyVNET')]",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
-    "apiVersion": "2015-06-15"
+    "apiVersion": "2015-06-15",
+    "executeScript": "finalDeploy.sh"
   },
   "resources": [
     {
@@ -217,7 +218,7 @@
         "settings": {
           "fileUris": [ "https://raw.githubusercontent.com/tanewill/tanewill/master/QuickCluster/"
           ],
-          "commandToExecute": "[concat('bash finaldeploy.sh',' ', parameters('masterHostName'),' ', parameters('hpcUserName'))]"
+          "commandToExecute": "[concat('bash ',variables('executeScript'),' parameters('masterHostName'),' ', parameters('hpcUserName'))]"
         }
       }
     }
