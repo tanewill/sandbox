@@ -4,36 +4,54 @@
   "parameters": {
     "adminUsername": {
       "type": "string",
+      "defaultValue": "azureuser",
       "metadata": {
         "description": "User name for the Virtual Machine."
       }
     },
     "adminPassword": {
       "type": "securestring",
+      "defaultValue": "Azure@123",
       "metadata": {
         "description": "Password for the Virtual Machine."
       }
     },
     "dnsLabelPrefix": {
       "type": "string",
+      "defaultValue": "testDNS",
       "metadata": {
         "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
       }
     },
     "uniquePrefix": {
       "type": "string",
-      "defaultValue": "tester"
+      "defaultValue": "testCluster",
+      "metadata": {
+        "description": "Prefix to append to all the default names"
+      }
     },
-    "ubuntuOSVersion": {
-      "type": "string",
-      "defaultValue": "14.04.2-LTS",
+    "numNodes": {
+      "type": "int",
+      "defaultValue": "1",
       "allowedValues": [
-        "12.04.5-LTS",
-        "14.04.2-LTS",
-        "15.10"
+        "1",
+        "2",
+        "3"
       ],
       "metadata": {
-        "description": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version. Allowed values: 12.04.5-LTS, 14.04.2-LTS, 15.10."
+        "description": "Number of Nodes that you would like to create, the default VM size is A9"
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "japaneast",
+      "allowedValues": [
+        "eastus",
+        "westus",
+        "westeurope"
+      ],
+      "metadata": {
+        "description": "Location where you would like the cluster to be located"
       }
     }
   },
