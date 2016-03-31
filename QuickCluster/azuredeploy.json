@@ -211,12 +211,13 @@
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat('vm',variables('vmName'),'/Installation')]",
       "location": "[variables('location')]",
+
       "properties": {
         "publisher": "Microsoft.OSTCExtensions",
         "type": "CustomScriptForLinux",
         "typeHandlerVersion": "1.4",
         "settings": {
-          "fileUris": [ "https://raw.githubusercontent.com/tanewill/tanewill/master/QuickCluster/"
+          "fileUris": [ concat("https://raw.githubusercontent.com/tanewill/tanewill/master/QuickCluster/",variables('executeScript'))
           ],
           "commandToExecute": "[concat('bash ',variables('executeScript'),' ',variables('vmName'),' ', parameters('adminUsername'))]"
         }
