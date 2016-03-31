@@ -68,7 +68,7 @@
     "publicIPAddressName": "[concat(parameters('uniquePrefix'),'myPublicIP')]",
     "publicIPAddressType": "Dynamic",
     "vmStorageAccountContainerName": "vhds",
-    "vmName": "[concat(parameters('uniquePrefix'),'MyUbuntuVM')]",
+    "vmName": "[concat(parameters('uniquePrefix'),'MyLinuxVM')]",
     "vmSize": "Standard_A9",
     "virtualNetworkName": "[concat(parameters('uniquePrefix'),'MyVNET')]",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
