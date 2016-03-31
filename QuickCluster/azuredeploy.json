@@ -32,11 +32,11 @@
     },
     "numNodes": {
       "type": "int",
-      "defaultValue": "1",
+      "defaultValue": 1,
       "allowedValues": [
-        "1",
-        "2",
-        "3"
+        1,
+        2,
+        3
       ],
       "metadata": {
         "description": "Number of Nodes that you would like to create, the default VM size is A9"
