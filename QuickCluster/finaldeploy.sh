@@ -21,7 +21,12 @@ install_pkgs()
     pkgs="zlib zlib-devel bzip2 bzip2-devel bzip2-libs openssl openssl-devel openssl-libs gcc gcc-c++ nfs-utils rpcbind mdadm wget"
     yum -y install $pkgs
 }
-
+test_deploy()
+{
+    cd ~
+    touch hello
+    touch `date +"%Y%m%d@%H:%M:%S"`
+}
 
 setup_shares()
 {
@@ -76,8 +81,9 @@ setup_env()
 }
 
 install_pkgs
-setup_shares
-setup_hpc_user
-setup_env
+test_deploy
+#setup_shares
+#setup_hpc_user
+#setup_env
 
 
