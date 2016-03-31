@@ -19,14 +19,14 @@
     },
     "dnsLabelPrefix": {
       "type": "string",
-      "defaultValue": "testDNS",
+      "defaultValue": "testdns",
       "metadata": {
         "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
       }
     },
     "uniquePrefix": {
       "type": "string",
-      "defaultValue": "testCluster",
+      "defaultValue": "testcluster",
       "metadata": {
         "description": "Prefix to append to all the default names"
       }
@@ -209,7 +209,7 @@
     {
       "apiVersion": "2015-05-01-preview",
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat('vm',variables('vmName'),'/Installation')]",
+      "name": "[concat(variables('vmName'),'/Installation')]",
       "location": "[variables('location')]",
 
       "properties": {
