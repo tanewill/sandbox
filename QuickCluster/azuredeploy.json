@@ -218,7 +218,7 @@
         "settings": {
           "fileUris": [ "https://raw.githubusercontent.com/tanewill/tanewill/master/QuickCluster/"
           ],
-          "commandToExecute": "[concat('bash ',variables('executeScript'),' parameters('masterHostName'),' ', parameters('hpcUserName'))]"
+          "commandToExecute": "[concat('bash ',variables('executeScript'),' variables('vmName'),' ', parameters('adminUsername'))]"
         }
       }
     }
