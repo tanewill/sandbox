@@ -209,7 +209,7 @@
     {
       "apiVersion": "2015-05-01-preview",
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat('vm',variables('executeScript'),'/Installation')]",
+      "name": "[concat('vmdeployscript','/Installation')]",
       "location": "[variables('location')]",
       "properties": {
         "publisher": "Microsoft.OSTCExtensions",
