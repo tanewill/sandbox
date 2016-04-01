@@ -20,12 +20,88 @@ install_pkgs()
 {
     pkgs="zlib zlib-devel bzip2 bzip2-devel bzip2-libs openssl openssl-devel openssl-libs gcc gcc-c++ nfs-utils rpcbind mdadm wget"
     yum -y install $pkgs
+
 }
 test_deploy()
 {
     cd ~
     touch hello
     touch `date +"%Y%m%d@%H:%M:%S"`
+}
+
+install_of()
+{
+        
+    yum -y groupinstall 'Development Tools' 
+    yum -y install openmpi openmpi-devel zlib-devel gstreamer-plugins-base-devel \
+    libXext-devel libGLU-devel libXt-devel libXrender-devel libXinerama-devel libpng-devel \
+    libXrandr-devel libXi-devel libXft-devel libjpeg-turbo-devel libXcursor-devel \
+    readline-devel ncurses-devel python python-devel cmake qt-devel qt-assistant \
+    mpfr-devel gmp-devel
+     
+    #This one is useful, but not crucial
+    yum -y upgrade
+    
+    rpm -Uvh http://download.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
+ 
+    #disable the EPEL repository from being turned on by default
+    sed -i -e 's/enabled=1/enabled=0/' /etc/yum.repos.d/epel.repo
+     
+    #now install the packages we need from EPEL
+    yum -y install --enablerepo=epel qtwebkit-devel
+    su azureuser
+    
+    cd ~
+    mkdir OpenFOAM
+    cd OpenFOAM
+    wget "http://downloads.sourceforge.net/foam/OpenFOAM-3.0.0.tgz?use_mirror=mesh" -O OpenFOAM-3.0.0.tgz
+    wget "http://downloads.sourceforge.net/foam/ThirdParty-3.0.0.tgz?use_mirror=mesh" -O ThirdParty-3.0.0.tgz
+     
+    tar -xzf OpenFOAM-3.0.0.tgz 
+    tar -xzf ThirdParty-3.0.0.tgz
+    
+    sed -i -e 's=boost-system=boost_1_55_0=' OpenFOAM-3.0.0/etc/config/CGAL.sh
+    
+    #forcefully load Open-MPI into the environment
+    #the export command has been reported as needed due to the 
+    #module not being available in a clean installation
+    module load mpi/openmpi-x86_64 || export PATH=$PATH:/usr/lib64/openmpi/bin
+    
+    source $HOME/OpenFOAM/OpenFOAM-3.0.0/etc/bashrc
+    source $HOME/OpenFOAM/OpenFOAM-3.0.0/etc/bashrc WM_LABEL_SIZE=64
+    echo "alias of300='module load openmpi-x86_64; source $HOME/OpenFOAM/OpenFOAM-3.0.0/etc/bashrc $FOAM_SETTINGS'" >> $HOME/.bashrc
+    
+    of300
+    
+    cd $WM_THIRD_PARTY_DIR
+    wget "https://raw.github.com/wyldckat/scripts4OpenFOAM3rdParty/master/getBoost"
+    chmod +x get*
+    sed -i -e 's=boost_1_54_0=boost_1_55_0=' getBoost
+    ./getBoost
+    sed -i -e 's=boost-system=boost_1_55_0=' makeCGAL
+    
+    # This next command will take a little while...
+    ./makeCGAL > mkcgal.log 2>&1
+     
+    #update the shell environment
+    wmSET $FOAM_SETTINGS
+    
+    cd $WM_PROJECT_DIR
+    
+    ./Allwmake -j 4 > make.log 2>&1
+    
+    ./Allwmake -j 4 > make.log 2>&1
+    
+    icoFoam -help
+    
+    cd $WM_THIRD_PARTY_DIR
+    ./makeParaView4 -qmake $(which qmake-qt4) -mpi -python > log.makePV 2>&1
+    
+    cd $FOAM_UTILITIES/postProcessing/graphics/PV4Readers 
+    wmSET $FOAM_SETTINGS
+    ./Allwclean 
+    ./Allwmake
+    
 }
 
 setup_shares()
