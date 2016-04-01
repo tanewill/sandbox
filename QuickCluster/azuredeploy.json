@@ -47,7 +47,7 @@
     }
   },
   "variables": {
-    "adminUsername": "azureuser"
+    "adminUsername": "azureuser",
     "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'salinuxvm')]",
     "location": "[resourceGroup().location]",
     "dataDisk1VhdName": "datadisk1",
