@@ -213,7 +213,6 @@
       "location": "[variables('location')]",
       "dependsOn": 
         "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]",
-      ],
       "properties": {
         "publisher": "Microsoft.OSTCExtensions",
         "type": "CustomScriptForLinux",
