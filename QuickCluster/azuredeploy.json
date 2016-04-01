@@ -154,7 +154,7 @@
         },
         "osProfile": {
           "computerName": "[variables('vmName')]",
-          "adminUsername": "[parameters('adminUsername')]",
+          "adminUsername": "[variables('adminUsername')]",
           "adminPassword": "[parameters('adminPassword')]"
         },
         "storageProfile": {
@@ -214,7 +214,7 @@
           "fileUris": [
             "[concat('https://raw.githubusercontent.com/tanewill/tanewill/master/QuickCluster/',variables('executeScript'))]"
           ],
-          "commandToExecute": "[concat('bash ',variables('executeScript'),' ',variables('vmName'),' ', parameters('adminUsername'))]"
+          "commandToExecute": "[concat('bash ',variables('executeScript'),' ',variables('vmName'),' ', variables('adminUsername'))]"
         }
       }
     }
@@ -226,7 +226,7 @@
      },
      "sshCommand": {
          "type": "string",
-         "value": "[concat('ssh ', parameters('adminUsername'), '@', parameters('dnsLabelPrefix'), '.', variables('location'), '.cloudapp.azure.com')]"
+         "value": "[concat('ssh ', variables('adminUsername'), '@', parameters('dnsLabelPrefix'), '.', variables('location'), '.cloudapp.azure.com')]"
      } 
   }
 }
