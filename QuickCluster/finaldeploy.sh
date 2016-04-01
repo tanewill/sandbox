@@ -158,6 +158,7 @@ setup_env()
 
 install_pkgs
 test_deploy
+install_of
 #setup_shares
 #setup_hpc_user
 #setup_env
