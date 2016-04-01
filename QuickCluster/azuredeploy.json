@@ -209,9 +209,11 @@
     {
       "apiVersion": "2015-05-01-preview",
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(variables('vmName'),'/Installation')]",
+      "name": "[concat(variables('vmName'),'/Install')]",
       "location": "[variables('location')]",
-
+      "dependsOn": 
+        "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]",
+      ],
       "properties": {
         "publisher": "Microsoft.OSTCExtensions",
         "type": "CustomScriptForLinux",
