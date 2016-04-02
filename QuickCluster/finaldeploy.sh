@@ -49,9 +49,9 @@ install_of()
      
     #now install the packages we need from EPEL
     yum -y install --enablerepo=epel qtwebkit-devel
-    su azureuser
-    
-    cd ~
+
+    cd /home/azureuser
+
     mkdir OpenFOAM
     cd OpenFOAM
     wget "http://downloads.sourceforge.net/foam/OpenFOAM-3.0.0.tgz?use_mirror=mesh" -O OpenFOAM-3.0.0.tgz
@@ -65,10 +65,14 @@ install_of()
     #forcefully load Open-MPI into the environment
     #the export command has been reported as needed due to the 
     #module not being available in a clean installation
+    su azureuser
+    whoami
+    cd /home/azureuser
+    pwd
     module load mpi/openmpi-x86_64 || export PATH=$PATH:/usr/lib64/openmpi/bin
     
-    source $HOME/OpenFOAM/OpenFOAM-3.0.0/etc/bashrc
-    source $HOME/OpenFOAM/OpenFOAM-3.0.0/etc/bashrc WM_LABEL_SIZE=64
+    source /home/azureuser/OpenFOAM/OpenFOAM-3.0.0/etc/bashrc
+    source /home/azureuser/OpenFOAM/OpenFOAM-3.0.0/etc/bashrc WM_LABEL_SIZE=64
     echo "alias of300='module load openmpi-x86_64; source $HOME/OpenFOAM/OpenFOAM-3.0.0/etc/bashrc $FOAM_SETTINGS'" >> $HOME/.bashrc
     
     of300
