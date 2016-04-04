@@ -56,7 +56,7 @@
         "Standard_A11"
       ],
       "metadata": {
-        "description": "Location where you would like the cluster to be located"
+        "description": "Which instance would you like to deploy to?"
       }
     }
   },
