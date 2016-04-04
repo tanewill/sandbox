@@ -44,6 +44,20 @@
       "metadata": {
         "description": "Location where you would like the cluster to be located"
       }
+    },
+    "paramVMSize": {
+      "type": "string",
+      "defaultValue": "Standard_A4",
+      "allowedValues": [
+        "Standard_A4",
+        "Standard_A8",
+        "Standard_A9",
+        "Standard_A10",
+        "Standard_A11"
+      ],
+      "metadata": {
+        "description": "Location where you would like the cluster to be located"
+      }
     }
   },
   "variables": {
@@ -63,7 +77,7 @@
     "publicIPAddressType": "Dynamic",
     "vmStorageAccountContainerName": "vhds",
     "vmName": "[concat(parameters('uniquePrefix'),'MyLinuxVM')]",
-    "vmSize": "Standard_A9",
+    "vmSize": "parameters('paramVMSize')",
     "virtualNetworkName": "[concat(parameters('uniquePrefix'),'MyVNET')]",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
