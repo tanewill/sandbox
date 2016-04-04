@@ -31,7 +31,7 @@ test_deploy()
 
 install_of()
 {
-        
+    echo on
     yum -y groupinstall 'Development Tools' 
     yum -y install openmpi openmpi-devel zlib-devel gstreamer-plugins-base-devel \
     libXext-devel libGLU-devel libXt-devel libXrender-devel libXinerama-devel libpng-devel \
