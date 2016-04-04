@@ -65,6 +65,7 @@ install_of()
     #forcefully load Open-MPI into the environment
     #the export command has been reported as needed due to the 
     #module not being available in a clean installation
+    chmod -R azureuser:azureuser /home/azureuser/OpenFOAM
     su azureuser
     whoami
     cd /home/azureuser
@@ -73,7 +74,10 @@ install_of()
     
     source /home/azureuser/OpenFOAM/OpenFOAM-3.0.0/etc/bashrc
     source /home/azureuser/OpenFOAM/OpenFOAM-3.0.0/etc/bashrc WM_LABEL_SIZE=64
-    echo "alias of300='module load openmpi-x86_64; source $HOME/OpenFOAM/OpenFOAM-3.0.0/etc/bashrc $FOAM_SETTINGS'" >> $HOME/.bashrc
+    echo "alias of300='module load mpi/openmpi-x86_64; source $HOME/OpenFOAM/OpenFOAM-3.0.0/etc/bashrc $FOAM_SETTINGS'" >> /home/azureuser/.bashrc
+    source /home/azureuser/.bashrc
+    
+    env|sort > /home/azureuser/environlist.txt
     
     of300
     
