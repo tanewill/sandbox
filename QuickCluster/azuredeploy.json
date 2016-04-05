@@ -79,7 +79,7 @@
     "publicIPAddressType": "Dynamic",
     "vmStorageAccountContainerName": "vhds",
     "vmName": "[concat(parameters('uniquePrefix'),'MyLinuxVM')]",
-    "vmSize": "Basic_A4",
+    "vmSize": "[parameters('paramVMSize')]",
     "virtualNetworkName": "[concat(parameters('uniquePrefix'),'MyVNET')]",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
