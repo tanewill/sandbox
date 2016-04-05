@@ -37,7 +37,9 @@
       "defaultValue": "japaneast",
       "allowedValues": [
         "eastus",
+        "eastus2",
         "japaneast",
+        "japanwest",
         "westus",
         "westeurope"
       ],
