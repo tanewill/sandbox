@@ -76,6 +76,11 @@ install_of()
     source /home/azureuser/OpenFOAM/OpenFOAM-3.0.0/etc/bashrc WM_LABEL_SIZE=64
     echo "alias of300='module load mpi/openmpi-x86_64; source $HOME/OpenFOAM/OpenFOAM-3.0.0/etc/bashrc $FOAM_SETTINGS'" >> /home/azureuser/.bashrc
     source /home/azureuser/.bashrc
+    export WM_PROJECT_DIR=/home/azureuser/OpenFOAM/OpenFOAM-3.0.0
+    export WM_PROJECT_INST_DIR=/home/azureuser//OpenFOAM
+    export WM_PROJECT_USER_DIR=/home/azureuser/OpenFOAM/azureuser-3.0.0
+    export WM_PROJECT_VERSION=3.0.0
+    export WM_THIRD_PARTY_DIR=/home/azureuser/OpenFOAM/ThirdParty-3.0.0
     
     env|sort > /home/azureuser/environlist.txt
     
