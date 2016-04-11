@@ -10,6 +10,7 @@
         },
         "adminUsername": {
             "type": "string",
+            "defaultValue": "azureuser",
             "metadata": {
                 "description": "User name for the Virtual Machine."
             }
@@ -52,6 +53,14 @@
         "vmSize": {
             "type": "string",
             "defaultValue": "Standard_A1",
+            "allowedValues": [
+            "Basic_A4",
+            "Standard_A1",
+            "Standard_A8",
+            "Standard_A9",
+            "Standard_A10",
+            "Standard_A11"
+            ],
             "metadata": {
                 "description": "Virtual Machine Size"
             }
