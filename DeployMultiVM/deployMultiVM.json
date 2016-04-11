@@ -249,7 +249,7 @@
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "name": "[concat(parameters('vmNamePrefix'),copyIndex(),'/Install')]",
             "location": "[parameters('location')]",
-            "dependsOn": ["[concat(parameters('vmNamePrefix'),copyIndex())]"],
+            "dependsOn": ["[concat('Microsoft.Compute/virtualMachines/',concat(parameters('vmNamePrefix'),copyIndex())]"],
             "properties": {
                 "publisher": "Microsoft.OSTCExtensions",
                 "type": "CustomScriptForLinux",
