@@ -258,7 +258,7 @@
                 "fileUris": [
                     "['https://raw.githubusercontent.com/tanewill/sandbox/Ubuntu/DeployMultiVM/finaldeploy.sh']"
                 ],
-                "commandToExecute": "[concat('bash ','https://raw.githubusercontent.com/tanewill/sandbox/Ubuntu/DeployMultiVM/finaldeploy.sh',' ',concat(parameters('vmNamePrefix'),copyIndex()),' ', variables('adminUsername'))]"
+                "commandToExecute": "[concat('bash ','https://raw.githubusercontent.com/tanewill/sandbox/Ubuntu/DeployMultiVM/finaldeploy.sh',' ',concat(parameters('vmNamePrefix'),copyIndex()),' ', parameters('adminUsername'))]"
                 }
             }
             }
