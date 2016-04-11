@@ -3,13 +3,13 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "newStorageAccountName": {
-            "value": "mslinuxbrisebois"
+            "value": "mslinuxtaneww"
         },
         "adminUsername": {
-            "value": "brisebois"
+            "value": "tanewill"
         },
         "dnsNameForPublicIP": {
-            "value": "briseboisdns"
+            "value": "tanewilldns"
         }
     }
 }
