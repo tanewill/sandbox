@@ -238,6 +238,29 @@
                 "displayName": "VirtualMachine"
             },
             "type": "Microsoft.Compute/virtualMachines"
-        }
+        },
+        {
+           
+            "apiVersion": "2015-05-01-preview",
+            "copy": {
+                "name": "nodeCopy",
+                "count": "[parameters('vmCount')]"
+            },
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(variables('vmName'),copyIndex(),'/Install')]",
+            "location": "[variables('location')]",
+            "dependsOn": ["[concat(parameters('vmNamePrefix'),copyIndex())]"],
+            "properties": {
+                "publisher": "Microsoft.OSTCExtensions",
+                "type": "CustomScriptForLinux",
+                "typeHandlerVersion": "1.4",
+                "settings": {
+                "fileUris": [
+                    "['https://raw.githubusercontent.com/tanewill/sandbox/Ubuntu/DeployMultiVM/finaldeploy.sh']"
+                ],
+                "commandToExecute": "[concat('bash ',variables('executeScript'),' ',concat(variables('vmName'),copyIndex()),' ', variables('adminUsername'))]"
+                }
+            }
+            }
     ]
 }
