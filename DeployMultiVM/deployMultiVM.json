@@ -257,7 +257,7 @@
                 "typeHandlerVersion": "1.4",
                 "settings": {
                 "fileUris": [
-                    "[concat('https://raw.githubusercontent.com/tanewill/tanewill/ubuntu/DeployMultiVM/',variables('executeScript'))]"
+                    "[concat('https://raw.githubusercontent.com/tanewill/tanewill/Ubuntu/DeployMultiVM/',variables('executeScript'))]"
                 ],
                 "commandToExecute": "[concat('bash ',variables('executeScript'),' ',concat(parameters('vmNamePrefix'),copyIndex()),' ', parameters('adminUsername'))]"
                 }
