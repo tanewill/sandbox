@@ -28,9 +28,9 @@
         },
         "OSVersion": {
             "type": "string",
-            "defaultValue": "7.1",
+            "defaultValue": "16.04.201604090",
             "allowedValues": [
-                "7.1"
+                "16.04.201604090"
             ]
         },
         "vmCount": {
@@ -67,8 +67,8 @@
     "variables": {
         "addressPrefix": "10.0.0.0/16",
         "dataDiskSize": "1023",
-        "imageOffer": "CentOS",
-        "imagePublisher": "OpenLogic",
+        "imageOffer": "ubuntuserver",
+        "imagePublisher": "canonical",
         "nicName": "NIC",
         "OSDiskName": "osdisk",
         "publicIPAddressType": "Dynamic",
