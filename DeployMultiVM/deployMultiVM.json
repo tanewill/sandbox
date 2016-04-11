@@ -248,7 +248,7 @@
             },
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "name": "[concat(parameters('vmNamePrefix'),copyIndex(),'/Install')]",
-            "location": "[variables('location')]",
+            "location": "[parameters('location')]",
             "dependsOn": ["[concat(parameters('vmNamePrefix'),copyIndex())]"],
             "properties": {
                 "publisher": "Microsoft.OSTCExtensions",
@@ -258,7 +258,7 @@
                 "fileUris": [
                     "['https://raw.githubusercontent.com/tanewill/sandbox/Ubuntu/DeployMultiVM/finaldeploy.sh']"
                 ],
-                "commandToExecute": "[concat('bash ',variables('executeScript'),' ',concat(parameters('vmNamePrefix'),copyIndex()),' ', variables('adminUsername'))]"
+                "commandToExecute": "[concat('bash ','https://raw.githubusercontent.com/tanewill/sandbox/Ubuntu/DeployMultiVM/finaldeploy.sh',' ',concat(parameters('vmNamePrefix'),copyIndex()),' ', variables('adminUsername'))]"
                 }
             }
             }
