@@ -28,9 +28,9 @@
         },
         "OSVersion": {
             "type": "string",
-            "defaultValue": "16.04.201604090",
+            "defaultValue": "16.04",
             "allowedValues": [
-                "16.04.201604090"
+                "16.04"
             ]
         },
         "vmCount": {
