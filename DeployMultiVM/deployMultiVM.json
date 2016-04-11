@@ -247,7 +247,7 @@
                 "count": "[parameters('vmCount')]"
             },
             "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat(variables('vmName'),copyIndex(),'/Install')]",
+            "name": "[concat(variables('vmNamePrefix'),copyIndex(),'/Install')]",
             "location": "[variables('location')]",
             "dependsOn": ["[concat(parameters('vmNamePrefix'),copyIndex())]"],
             "properties": {
@@ -258,7 +258,7 @@
                 "fileUris": [
                     "['https://raw.githubusercontent.com/tanewill/sandbox/Ubuntu/DeployMultiVM/finaldeploy.sh']"
                 ],
-                "commandToExecute": "[concat('bash ',variables('executeScript'),' ',concat(variables('vmName'),copyIndex()),' ', variables('adminUsername'))]"
+                "commandToExecute": "[concat('bash ',variables('executeScript'),' ',concat(variables('vmNamePrefix'),copyIndex()),' ', variables('adminUsername'))]"
                 }
             }
             }
