@@ -86,7 +86,8 @@
         "subnetPrefix": "10.0.0.0/24",
         "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
         "vmStorageAccountContainerName": "vhds",
-        "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]"
+        "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]",
+        "executeScript": "finaldeploy.sh"
     },
     "resources": [
         {
@@ -256,9 +257,9 @@
                 "typeHandlerVersion": "1.4",
                 "settings": {
                 "fileUris": [
-                    "['https://raw.githubusercontent.com/tanewill/sandbox/Ubuntu/DeployMultiVM/finaldeploy.sh']"
+                    "[concat('https://raw.githubusercontent.com/tanewill/tanewill/ubuntu/DeployMultiVM/',variables('executeScript'))]"
                 ],
-                "commandToExecute": "[concat('bash ','https://raw.githubusercontent.com/tanewill/sandbox/Ubuntu/DeployMultiVM/finaldeploy.sh',' ',concat(parameters('vmNamePrefix'),copyIndex()),' ', parameters('adminUsername'))]"
+                "commandToExecute": "[concat('bash ',variables('executeScript'),' ',concat(parameters('vmNamePrefix'),copyIndex()),' ', parameters('adminUsername'))]"
                 }
             }
             }
