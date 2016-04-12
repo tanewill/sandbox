@@ -1,42 +1,25 @@
 #!/bin/bash
 
-MASTER_HOSTNAME=$1
+mkdir -p /home/azureuser/bin/
+cd /home/azureuser/bin
+wget https://raw.githubusercontent.com/tanewill/utils/master/authMe.sh
+wget https://raw.githubusercontent.com/tanewill/utils/master/myClusRun.sh
+chmod +x *
+apt-get --yes --force-yes install arp-scan
+apt-get --yes --force-yes install sshpass
+apt-get --yes --force-yes install htop
 
-# Shares
-SHARE_HOME=/share/home
-SHARE_DATA=/share/data
+cd /home/azureuser
+arp-scan -I eth0 10.0.0.0/24 | grep 10.0 | awk '{print $1}' > temp.txt
+tail -n+1 temp.txt > nodenames.txt
+ifconfig | grep 'inet addr:10.0.0.'|awk -F':' '{print $2}'|awk '{print $1}' >> nodenames.txt
+runuser -l azureuser -c 'mkdir -p ~/.ssh'
+runuser -l azureuser -c "ssh-keygen -f .ssh/id_rsa -t rsa -N ''"
+runuser -l azureuser -c 'bin/authMe.sh'
 
-
-# Hpc User
-HPC_USER=$2
-HPC_UID=7007
-HPC_GROUP=hpc
-HPC_GID=7007
-
-
-# Installs all required packages.
-#
-    
-setup_hpc_user()
-{
-    # disable selinux
-    #sed -i 's/enforcing/disabled/g' /etc/selinux/config
-    #setenforce permissive
-    
-    groupadd -g $HPC_GID $HPC_GROUP
-
-    # Don't require password for HPC user sudo
-    echo "$HPC_USER ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-    
-    # Disable tty requirement for sudo
-    sed -i 's/^Defaults[ ]*requiretty/# Defaults requiretty/g' /etc/sudoers
-
-    
-    useradd -c "HPC User" -g $HPC_GROUP -d $SHARE_HOME/$HPC_USER -s /bin/bash -u $HPC_UID $HPC_USER
-    
-}
-
-#install_pkgs
-#setup_shares
-#setup_hpc_user
-#setup_env
+runuser -l azureuser -c "bin/myClusRun.sh 'sudo add-apt-repository http://www.openfoam.org/download/ubuntu'"
+runuser -l azureuser -c "bin/myClusRun.sh 'sudo apt-get update'"
+runuser -l azureuser -c "bin/myClusRun.sh 'sudo apt-get -qq --yes --force-yes install openfoam30'"
+runuser -l azureuser -c "bin/myClusRun.sh 'sudo apt-get -qq --yes --force-yes install paraviewopenfoam44'"
+bin/myClusRun.sh 'echo "source /opt/openfoam30/etc/bashrc">>/home/azureuser/.bashrc'
+bin/myClusRun.sh 'echo "source /opt/openfoam30/etc/bashrc">>~/.bashrc'
