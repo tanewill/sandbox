@@ -2,10 +2,10 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "newStorageAccountName": {
+        "nameModifier": {
             "type": "string",
             "metadata": {
-                "description": "Unique DNS Name for the Storage Account where the Virtual Machine's disks will be placed."
+                "description": "Unique name to be applied to all resources."
             }
         },
         "adminUsername": {
@@ -21,12 +21,6 @@
                 "description": "Password for the Virtual Machine."
             }
         },
-        "dnsPrefixNameForPublicIP": {
-            "type": "string",
-            "metadata": {
-                "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
-            }
-        },
         "OSVersion": {
             "type": "string",
             "defaultValue": "15.10",
@@ -38,13 +32,7 @@
             "type": "int",
             "defaultValue": 1
         },
-        "virtualNetworkName": {
-            "type": "string",
-            "metadata": {
-                "description": "Virtual Network Name"
-            }
-        },
-        "vmNamePrefix": {
+         {
             "type": "string",
             "metadata": {
                 "description": "Virtual Machine Name Prefix"
@@ -74,6 +62,10 @@
         }
     },
     "variables": {
+        "newStorageAccountName":"[concat(parameters('nameModifier'),'stor')]",
+        "dnsPrefixNameForPublicIP":"[concat(parameters('nameModifier'),'ip')]",
+        "virtualNetworkName": "[concat(parameters('nameModifier'),'net')]",
+        "vmNamePrefix":"[concat(parameters('nameModifier'),comp')]",
         "addressPrefix": "10.0.0.0/16",
         "dataDiskSize": "1023",
         "imageOffer": "ubuntuserver",
@@ -99,7 +91,7 @@
         },
         {
             "type": "Microsoft.Storage/storageAccounts",
-            "name": "[parameters('newStorageAccountName')]",
+            "name": "[variables('newStorageAccountName')]",
             "apiVersion": "2015-05-01-preview",
             "location": "[parameters('location')]",
             "tags": {
@@ -112,7 +104,7 @@
         {
             "apiVersion": "2015-05-01-preview",
             "type": "Microsoft.Network/publicIPAddresses",
-            "name": "[concat(parameters('dnsPrefixNameForPublicIP'),copyIndex())]",
+            "name": "[concat(variables('dnsPrefixNameForPublicIP'),copyIndex())]",
             "location": "[parameters('location')]",
             "tags": {
                 "displayName": "PublicIPAddress"
@@ -120,7 +112,7 @@
             "properties": {
                 "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
                 "dnsSettings": {
-                    "domainNameLabel": "[concat(parameters('dnsPrefixNameForPublicIP'),copyIndex())]"
+                    "domainNameLabel": "[concat(variables('dnsPrefixNameForPublicIP'),copyIndex())]"
                 }
             },
             "copy": {
@@ -161,7 +153,7 @@
                 "displayName": "NetworkInterface"
             },
             "dependsOn": [
-                "[concat('Microsoft.Network/publicIPAddresses/', concat(parameters('dnsPrefixNameForPublicIP'),copyIndex()))]",
+                "[concat('Microsoft.Network/publicIPAddresses/', concat(variables('dnsPrefixNameForPublicIP'),copyIndex()))]",
                 "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
             ],
             "properties": {
@@ -171,7 +163,7 @@
                         "properties": {
                             "privateIPAllocationMethod": "Dynamic",
                             "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('dnsPrefixNameForPublicIP'),copyIndex()))]"
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses',concat(variables('dnsPrefixNameForPublicIP'),copyIndex()))]"
                             },
                             "subnet": {
                                 "id": "[variables('subnetRef')]"
@@ -195,11 +187,11 @@
                 "count": "[parameters('vmCount')]"
             },
             "dependsOn": [
-                "[concat('Microsoft.Storage/storageAccounts/', parameters('newStorageAccountName'))]",
+                "[concat('Microsoft.Storage/storageAccounts/', variables('newStorageAccountName'))]",
                 "[concat('Microsoft.Network/networkInterfaces/', concat(variables('nicName'),copyIndex()))]"
             ],
             "location": "[parameters('location')]",
-            "name": "[concat(parameters('vmNamePrefix'),copyIndex())]",
+            "name": "[concat(variables('vmNamePrefix'),copyIndex())]",
             "properties": {
                 "availabilitySet": {
                     "id": "[resourceId('Microsoft.Compute/availabilitySets', variables('availabilitySetName'))]"
@@ -208,7 +200,7 @@
                     "vmSize": "[parameters('vmSize')]"
                 },
                 "osProfile": {
-                    "computername": "[concat(parameters('vmNamePrefix'),copyIndex())]",
+                    "computername": "[concat(variables('vmNamePrefix'),copyIndex())]",
                     "adminUsername": "[parameters('adminUsername')]",
                     "adminPassword": "[parameters('adminPassword')]"
                 },
@@ -222,7 +214,7 @@
                     "osDisk": {
                         "name": "osdisk",
                         "vhd": {
-                            "uri": "[concat('http://',parameters('newStorageAccountName'),'.blob.core.windows.net/',variables('vmStorageAccountContainerName'),'/',concat(variables('OSDiskName'),copyIndex()),'.vhd')]"
+                            "uri": "[concat('http://',variables('newStorageAccountName'),'.blob.core.windows.net/',variables('vmStorageAccountContainerName'),'/',concat(variables('OSDiskName'),copyIndex()),'.vhd')]"
                         },
                         "caching": "ReadWrite",
                         "createOption": "FromImage"
@@ -233,7 +225,7 @@
                             "diskSizeGB": "[variables('dataDiskSize')]",
                             "lun": 0,
                             "vhd": {
-                                "Uri": "[concat('http://',parameters('newStorageAccountName'),'.blob.core.windows.net/vhds/',concat(parameters('vmNamePrefix'),copyIndex()),'dataDisk1' ,'.vhd')]"
+                                "Uri": "[concat('http://',variables('newStorageAccountName'),'.blob.core.windows.net/vhds/',concat(variables('vmNamePrefix'),copyIndex()),'dataDisk1' ,'.vhd')]"
                             },
                             "caching": "None",
                             "createOption": "Empty"
@@ -261,9 +253,9 @@
                 "count": "[parameters('vmCount')]"
             },
             "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat(parameters('vmNamePrefix'),copyIndex(),'/Install')]",
+            "name": "[concat(variables('vmNamePrefix'),copyIndex(),'/Install')]",
             "location": "[parameters('location')]",
-            "dependsOn": ["[concat('Microsoft.Compute/virtualMachines/',parameters('vmNamePrefix'),copyIndex())]"],
+            "dependsOn": ["[concat('Microsoft.Compute/virtualMachines/',variables('vmNamePrefix'),copyIndex())]"],
             "properties": {
                 "publisher": "Microsoft.OSTCExtensions",
                 "type": "CustomScriptForLinux",
@@ -272,7 +264,7 @@
                 "fileUris": [
                     "[concat('https://raw.githubusercontent.com/tanewill/tanewill/Ubuntu/DeployMultiVM/',variables('executeScript'))]"
                 ],
-                "commandToExecute": "[concat('bash ',variables('executeScript'),' ',concat(parameters('vmNamePrefix'),copyIndex()),' ', parameters('adminUsername'))]"
+                "commandToExecute": "[concat('bash ',variables('executeScript'),' ',concat(variables('vmNamePrefix'),copyIndex()),' ', parameters('adminUsername'))]"
                 }
             }
             }
