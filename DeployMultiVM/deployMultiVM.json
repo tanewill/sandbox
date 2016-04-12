@@ -92,7 +92,7 @@
     "resources": [
         {
       "type": "Microsoft.Compute/availabilitySets",
-      "name": "[variables('availabilitySetName')]",
+      "name": "['testavset']",
       "apiVersion": "2015-05-01-preview",
       "location": "[parameters('location')]"
         },
