@@ -59,7 +59,7 @@
         "newStorageAccountName":"[concat(parameters('nameModifier'),'stor')]",
         "dnsPrefixNameForPublicIP":"[concat(parameters('nameModifier'),'ip')]",
         "virtualNetworkName": "[concat(parameters('nameModifier'),'net')]",
-        "vmNamePrefix":"[concat(parameters('nameModifier'),comp')]",
+        "vmNamePrefix":"[concat(parameters('nameModifier'),'comp')]",
         "addressPrefix": "10.0.0.0/16",
         "dataDiskSize": "1023",
         "imageOffer": "ubuntuserver",
