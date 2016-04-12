@@ -10,8 +10,7 @@ apt-get --yes --force-yes install sshpass
 apt-get --yes --force-yes install htop
 
 cd /home/azureuser
-arp-scan -I eth0 10.0.0.0/24 | grep 10.0 | awk '{print $1}' > temp.txt
-tail -n+1 temp.txt > nodenames.txt
+arp-scan -I eth0 10.0.0.0/24 | grep 10.0 | awk '{print $1}'|tail -n+2 temp.txt > nodenames.txt
 ifconfig | grep 'inet addr:10.0.0.'|awk -F':' '{print $2}'|awk '{print $1}' >> nodenames.txt
 runuser -l azureuser -c 'mkdir -p ~/.ssh'
 runuser -l azureuser -c "ssh-keygen -f .ssh/id_rsa -t rsa -N ''"
