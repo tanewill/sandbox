@@ -87,12 +87,13 @@
         "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
         "vmStorageAccountContainerName": "vhds",
         "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]",
-        "executeScript": "finaldeploy.sh"
+        "executeScript": "finaldeploy.sh",
+        "availabilitySetName": "computeavset"
     },
     "resources": [
         {
       "type": "Microsoft.Compute/availabilitySets",
-      "name": "['testavset']",
+      "name": "[variables('availabilitySetName')]",
       "apiVersion": "2015-05-01-preview",
       "location": "[parameters('location')]"
         },
@@ -200,6 +201,9 @@
             "location": "[parameters('location')]",
             "name": "[concat(parameters('vmNamePrefix'),copyIndex())]",
             "properties": {
+                "availabilitySet": {
+                    "id": "[resourceId('Microsoft.Compute/availabilitySets', variables('availabilitySetName'))]"
+                },
                 "hardwareProfile": {
                     "vmSize": "[parameters('vmSize')]"
                 },
