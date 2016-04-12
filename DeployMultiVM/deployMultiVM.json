@@ -239,10 +239,6 @@
         {
            
             "apiVersion": "2015-05-01-preview",
-            "copy": {
-                "name": "nodeCopy",
-                "count": "[parameters('vmCount')]"
-            },
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "name": "[concat(variables('vmNamePrefix'),copyIndex(),'/Install')]",
             "location": "[parameters('location')]",
@@ -255,7 +251,7 @@
                 "fileUris": [
                     "[concat('https://raw.githubusercontent.com/tanewill/tanewill/Ubuntu/DeployMultiVM/',variables('executeScript'))]"
                 ],
-                "commandToExecute": "[concat('bash ',variables('executeScript'),' ',concat(variables('vmNamePrefix'),copyIndex()),' ', parameters('adminUsername'))]"
+                "commandToExecute": "[concat('bash ',variables('executeScript'))]"
                 }
             }
             }
