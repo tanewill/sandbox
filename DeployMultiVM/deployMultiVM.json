@@ -32,12 +32,6 @@
             "type": "int",
             "defaultValue": 1
         },
-         {
-            "type": "string",
-            "metadata": {
-                "description": "Virtual Machine Name Prefix"
-            }
-        },
         "vmSize": {
             "type": "string",
             "defaultValue": "Standard_A1",
