@@ -17,8 +17,8 @@ runuser -l azureuser -c "ssh-keygen -f .ssh/id_rsa -t rsa -N ''"
 runuser -l azureuser -c 'bin/authMe.sh'
 
 runuser -l azureuser -c "bin/myClusRun.sh 'DEBIAN_FRONTEND=noninteractive sudo add-apt-repository http://www.openfoam.org/download/ubuntu'"
-runuser -l azureuser -c "bin/myClusRun.sh 'sudo apt-get update'"
-runuser -l azureuser -c "bin/myClusRun.sh 'sudo apt-get -qq --yes --force-yes install openfoam30'"
-runuser -l azureuser -c "bin/myClusRun.sh 'sudo apt-get -qq --yes --force-yes install paraviewopenfoam44'"
+runuser -l azureuser -c "bin/myClusRun.sh 'DEBIAN_FRONTEND=noninteractive sudo apt-get update'"
+runuser -l azureuser -c "bin/myClusRun.sh 'DEBIAN_FRONTEND=noninteractive sudo apt-get -qq --yes --force-yes install openfoam30'"
+runuser -l azureuser -c "bin/myClusRun.sh 'DEBIAN_FRONTEND=noninteractive sudo apt-get -qq --yes --force-yes install paraviewopenfoam44'"
 bin/myClusRun.sh 'echo "source /opt/openfoam30/etc/bashrc">>/home/azureuser/.bashrc'
 bin/myClusRun.sh 'echo "source /opt/openfoam30/etc/bashrc">>~/.bashrc'
