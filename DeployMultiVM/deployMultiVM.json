@@ -91,6 +91,12 @@
     },
     "resources": [
         {
+      "type": "Microsoft.Compute/availabilitySets",
+      "name": "[variables('availabilitySetName')]",
+      "apiVersion": "2015-05-01-preview",
+      "location": "[parameters('location')]"
+        },
+        {
             "type": "Microsoft.Storage/storageAccounts",
             "name": "[parameters('newStorageAccountName')]",
             "apiVersion": "2015-05-01-preview",
@@ -178,6 +184,9 @@
                 "count": "[parameters('vmCount')]"
             }
         },
+        
+        
+        
         {
             "apiVersion": "2015-05-01-preview",
             "copy": {
