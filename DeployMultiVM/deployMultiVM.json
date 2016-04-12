@@ -148,7 +148,7 @@
             },
             "dependsOn": [
                 "[concat('Microsoft.Network/publicIPAddresses/', concat(variables('dnsPrefixNameForPublicIP'),copyIndex()))]",
-                "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
+                "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
             ],
             "properties": {
                 "ipConfigurations": [
@@ -171,9 +171,6 @@
                 "count": "[parameters('vmCount')]"
             }
         },
-        
-        
-        
         {
             "apiVersion": "2015-05-01-preview",
             "copy": {
