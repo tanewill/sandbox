@@ -1,11 +1,5 @@
 #!/bin/bash
 
-mkdir -p /home/azureuser/bin/
-cd /home/azureuser/bin
-wget https://raw.githubusercontent.com/tanewill/utils/master/authMe.sh
-wget https://raw.githubusercontent.com/tanewill/utils/master/myClusRun.sh
-
-chmod +x *
 DEBIAN_FRONTEND=noninteractive apt-get --yes --force-yes install arp-scan
 DEBIAN_FRONTEND=noninteractive apt-get --yes --force-yes install sshpass
 DEBIAN_FRONTEND=noninteractive apt-get --yes --force-yes install htop
