@@ -17,7 +17,7 @@ runuser -l azureuser -c 'mv -f test.txt nodenames.txt'
 runuser -l azureuser -c 'bin/authMe.sh'
 
 #install openFOAM
-/bin/bash /home/azureuser/bin/myClusRun.sh 'echo "source /opt/openfoam30/etc/bashrc">>/home/azureuser/.bashrc'
+source bin/myClusRun.sh 'echo "source /opt/openfoam30/etc/bashrc">>/home/azureuser/.bashrc'
 runuser -l azureuser -c "bin/myClusRun.sh 'DEBIAN_FRONTEND=noninteractive sudo add-apt-repository http://www.openfoam.org/download/ubuntu'"
 runuser -l azureuser -c "bin/myClusRun.sh 'DEBIAN_FRONTEND=noninteractive sudo apt-get update'"
 runuser -l azureuser -c "bin/myClusRun.sh 'DEBIAN_FRONTEND=noninteractive sudo apt-get -qq --yes --force-yes install openfoam30'"
