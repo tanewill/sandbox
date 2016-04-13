@@ -50,7 +50,7 @@
         }
     },
     "variables": {
-        "nameModifier": "[uniquestring(resourceGroup().id)]"
+        "nameModifier": "[uniquestring(resourceGroup().id)]",
         "newStorageAccountName":"[concat(variables('nameModifier'),'stor')]",
         "dnsPrefixNameForPublicIP":"[concat(variables('nameModifier'),'ip')]",
         "virtualNetworkName": "[concat(variables('nameModifier'),'net')]",
