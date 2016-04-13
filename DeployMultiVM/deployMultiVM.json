@@ -2,13 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "nameModifier": {
-            "type": "string",
-            "defaultValue": "[resourceGroup().name]",
-            "metadata": {
-                "description": "Unique name to be applied to all resources."
-            }
-        },
         "adminUsername": {
             "type": "string",
             "defaultValue": "azureuser",
@@ -57,10 +50,11 @@
         }
     },
     "variables": {
-        "newStorageAccountName":"[concat(parameters('nameModifier'),'stor')]",
-        "dnsPrefixNameForPublicIP":"[concat(parameters('nameModifier'),'ip')]",
-        "virtualNetworkName": "[concat(parameters('nameModifier'),'net')]",
-        "vmNamePrefix":"[concat(parameters('nameModifier'),'comp')]",
+        "nameModifier": "[uniquestring(resourceGroup().id)]"
+        "newStorageAccountName":"[concat(variables('nameModifier'),'stor')]",
+        "dnsPrefixNameForPublicIP":"[concat(variables('nameModifier'),'ip')]",
+        "virtualNetworkName": "[concat(variables('nameModifier'),'net')]",
+        "vmNamePrefix":"[concat(variables('nameModifier'),'comp')]",
         "addressPrefix": "10.0.0.0/16",
         "dataDiskSize": "1023",
         "imageOffer": "ubuntuserver",
