@@ -74,7 +74,8 @@
         "vmStorageAccountContainerName": "vhds",
         "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
         "executeScript": "finaldeploy.sh",
-        "availabilitySetName": "computeavset"
+        "availabilitySetName": "computeavset",
+        "maxCount": "[parameters('vmCount')]"
     },
     "resources": [
         {
@@ -242,7 +243,7 @@
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "name": "[concat(variables('vmNamePrefix'),'0','/Install')]",
             "location": "[parameters('location')]",
-            "dependsOn": ["[concat('Microsoft.Compute/virtualMachines/', concat(variables('vmNamePrefix'),parameters('vmCount')))]"],
+            "dependsOn": ["[concat('Microsoft.Compute/virtualMachines/', concat(variables('vmNamePrefix'),variables('maxCount')))]"],
             "properties": {
                 "publisher": "Microsoft.OSTCExtensions",
                 "type": "CustomScriptForLinux",
