@@ -4,6 +4,7 @@
     "parameters": {
         "nameModifier": {
             "type": "string",
+            "defaultValue": resourceGroup().name,
             "metadata": {
                 "description": "Unique name to be applied to all resources."
             }
