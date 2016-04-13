@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #install needed packages
-DEBIAN_FRONTEND=noninteractive apt-get --yes --force-yes install arp-scan, sshpass, htop
+DEBIAN_FRONTEND=noninteractive apt-get --yes --force-yes install arp-scan sshpass htop
 
 #create nodelist
 cd /home/azureuser
