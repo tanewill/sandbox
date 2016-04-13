@@ -23,3 +23,7 @@ runuser -l azureuser -c "bin/myClusRun.sh 'DEBIAN_FRONTEND=noninteractive sudo a
 runuser -l azureuser -c "bin/myClusRun.sh 'DEBIAN_FRONTEND=noninteractive sudo apt-get -qq --yes --force-yes install openfoam30'"
 runuser -l azureuser -c "bin/myClusRun.sh 'DEBIAN_FRONTEND=noninteractive sudo apt-get -qq --yes --force-yes install paraviewopenfoam44'"
 
+#configure OpenFOAM
+runuser -l azureuser -c 'mkdir -p $FOAM_RUN'
+runuser -l azureuser -c 'cp -r $FOAM_TUTORIALS $FOAM_RUN'
+
