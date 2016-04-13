@@ -234,13 +234,7 @@
             "tags": {
                 "displayName": "VirtualMachine"
             },
-            "type": "Microsoft.Compute/virtualMachines",
-            "outputs": {
-                 "hostname": {
-                     "type": "string",
-                     "value": "[concat(variables('vmNamePrefix'),copyIndex())]"
-                }
-            
+            "type": "Microsoft.Compute/virtualMachines"
         },
         {
            
@@ -248,7 +242,7 @@
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "name": "[concat(variables('vmNamePrefix'),'0','/Install')]",
             "location": "[parameters('location')]",
-            "dependsOn": ["[concat('Microsoft.Compute/virtualMachines/', variables('vmNamePrefix'),variables('maxCount'))]"],
+            "dependsOn": ["[concat('Microsoft.Compute/virtualMachines/', variables('vmNamePrefix'),'0')]"],
             "properties": {
                 "publisher": "Microsoft.OSTCExtensions",
                 "type": "CustomScriptForLinux",
