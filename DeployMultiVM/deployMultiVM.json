@@ -40,13 +40,6 @@
             "metadata": {
                 "description": "Virtual Machine Size"
             }
-        },
-        "location": {
-            "type": "string",
-            "defaultValue": "West US",
-            "metadata": {
-                "description": "Location"
-            }
         }
     },
     "variables": {
@@ -75,13 +68,13 @@
       "type": "Microsoft.Compute/availabilitySets",
       "name": "[variables('availabilitySetName')]",
       "apiVersion": "2015-05-01-preview",
-      "location": "[parameters('location')]"
+      "location": "[resourceGroup().location]"
         },
         {
             "type": "Microsoft.Storage/storageAccounts",
             "name": "[variables('newStorageAccountName')]",
             "apiVersion": "2015-05-01-preview",
-            "location": "[parameters('location')]",
+            "location": "[resourceGroup().location]",
             "tags": {
                 "displayName": "StorageAccount"
             },
@@ -93,7 +86,7 @@
             "apiVersion": "2015-05-01-preview",
             "type": "Microsoft.Network/publicIPAddresses",
             "name": "[concat(variables('dnsPrefixNameForPublicIP'),copyIndex())]",
-            "location": "[parameters('location')]",
+            "location": "[resourceGroup().location]",
             "tags": {
                 "displayName": "PublicIPAddress"
             },
@@ -112,7 +105,7 @@
             "apiVersion": "2015-05-01-preview",
             "type": "Microsoft.Network/virtualNetworks",
             "name": "[variables('virtualNetworkName')]",
-            "location": "[parameters('location')]",
+            "location": "[resourceGroup().location]",
             "tags": {
                 "displayName": "VirtualNetwork"
             },
@@ -136,7 +129,7 @@
             "apiVersion": "2015-05-01-preview",
             "type": "Microsoft.Network/networkInterfaces",
             "name": "[concat(variables('nicName'),copyIndex())]",
-            "location": "[parameters('location')]",
+            "location": "[resourceGroup().location]",
             "tags": {
                 "displayName": "NetworkInterface"
             },
@@ -175,7 +168,7 @@
                 "[concat('Microsoft.Storage/storageAccounts/', variables('newStorageAccountName'))]",
                 "[concat('Microsoft.Network/networkInterfaces/', concat(variables('nicName'),copyIndex()))]"
             ],
-            "location": "[parameters('location')]",
+            "location": "[resourceGroup().location]",
             "name": "[concat(variables('vmNamePrefix'),copyIndex())]",
             "properties": {
                 "availabilitySet": {
@@ -235,7 +228,7 @@
             "apiVersion": "2015-05-01-preview",
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "name": "[concat(variables('vmNamePrefix'),'0','/Install')]",
-            "location": "[parameters('location')]",
+            "location": "[resourceGroup().location]",
             "dependsOn": ["[concat('Microsoft.Compute/virtualMachines/', variables('vmNamePrefix'),'0')]"],
             "properties": {
                 "publisher": "Microsoft.OSTCExtensions",
