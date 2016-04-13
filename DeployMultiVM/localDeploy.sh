@@ -13,7 +13,8 @@ runuser -l azureuser -c 'mkdir -p ~/.ssh'
 runuser -l azureuser -c "ssh-keygen -f .ssh/id_rsa -t rsa -N ''"
 runuser -l azureuser -c 'bin/authMe.sh'
 runuser -l azureuser -c "bin/myClusRun.sh hostname | sed '1d;$d' > test.txt"
-runuser -l azureuser -c 'mv -f test.txt nodenames.txt'
+runuser -l azureuser -c "runuser -l azureuser -c 'mv -f test.txt nodenames.txt'"
+sed -i '$ d' nodenames.txt
 runuser -l azureuser -c 'bin/authMe.sh'
 
 #install openFOAM
