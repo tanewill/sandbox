@@ -43,10 +43,10 @@
         }
     },
     "variables": {
-        "newStorageAccountName":"[concat(uniquestring(resourceGroup().id),'stor')]",
-        "dnsPrefixNameForPublicIP":"[concat(uniquestring(resourceGroup().id),'ip')]",
-        "virtualNetworkName": "[concat(uniquestring(resourceGroup().id),'net')]",
-        "vmNamePrefix":"[concat(uniquestring(resourceGroup().id),'comp')]",
+        "newStorageAccountName":"[concat(resourceGroup().name,'stor')]",
+        "dnsPrefixNameForPublicIP":"[concat(resourceGroup().name,'ip')]",
+        "virtualNetworkName": "[concat(resourceGroup().name,'net')]",
+        "vmNamePrefix":"[concat(resourceGroup().name,'comp')]",
         "addressPrefix": "10.0.0.0/16",
         "dataDiskSize": "1023",
         "imageOffer": "ubuntuserver",
