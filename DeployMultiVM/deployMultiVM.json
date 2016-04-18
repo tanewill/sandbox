@@ -80,7 +80,7 @@
         "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
         "vmStorageAccountContainerName": "vhds",
         "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
-        "executeScript": "finaldeploy.sh",
+        "executeScript": "[concat(parameters('offerType'),'_deploy.sh')]",
         "availabilitySetName": "computeavset"
     },
     "resources": [
@@ -242,6 +242,24 @@
                 "displayName": "VirtualMachine"
             },
             "type": "Microsoft.Compute/virtualMachines"
-        }
+        },
+        {
+           
+            "apiVersion": "2015-05-01-preview",
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(variables('vmNamePrefix'),'0','/Install')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": ["[concat('Microsoft.Compute/virtualMachines/', variables('vmNamePrefix'),'0')]"],
+            "properties": {
+                "publisher": "Microsoft.OSTCExtensions",
+                "type": "CustomScriptForLinux",
+                "typeHandlerVersion": "1.4",
+                "settings": {
+                "fileUris": [
+                    "[concat('https://raw.githubusercontent.com/tanewill/tanewill/Ubuntu/DeployMultiVM/',variables('executeScript'))]"
+                ],
+                "commandToExecute": "[concat('bash ',variables('executeScript'))]"
+                }
+            }
     ]
 }
