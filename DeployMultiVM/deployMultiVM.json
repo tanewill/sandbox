@@ -80,7 +80,7 @@
         "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
         "vmStorageAccountContainerName": "vhds",
         "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
-        "executeScript": "[concat(parameters('offerType'),'_deploy.sh')]",
+        "executeScript": "[concat(parameters('offerType'),'_',parameters('OSVersion'),_deploy.sh')]",
         "availabilitySetName": "computeavset"
     },
     "resources": [
