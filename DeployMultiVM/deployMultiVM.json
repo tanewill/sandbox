@@ -85,10 +85,10 @@
     },
     "resources": [
         {
-      "type": "Microsoft.Compute/availabilitySets",
-      "name": "[variables('availabilitySetName')]",
-      "apiVersion": "2015-05-01-preview",
-      "location": "[resourceGroup().location]"
+          "type": "Microsoft.Compute/availabilitySets",
+          "name": "[variables('availabilitySetName')]",
+          "apiVersion": "2015-05-01-preview",
+          "location": "[resourceGroup().location]"
         },
         {
             "type": "Microsoft.Storage/storageAccounts",
@@ -255,11 +255,12 @@
                 "type": "CustomScriptForLinux",
                 "typeHandlerVersion": "1.4",
                 "settings": {
-                "fileUris": [
-                    "[concat('https://raw.githubusercontent.com/tanewill/tanewill/Ubuntu/DeployMultiVM/',variables('executeScript'))]"
-                ],
-                "commandToExecute": "[concat('bash ',variables('executeScript'))]"
+                    "fileUris": [
+                        "[concat('https://raw.githubusercontent.com/tanewill/tanewill/Ubuntu/DeployMultiVM/',variables('executeScript'))]"
+                    ],
+                    "commandToExecute": "[concat('bash ',variables('executeScript'))]"
                 }
             }
+        }
     ]
 }
