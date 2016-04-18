@@ -35,7 +35,7 @@
         },
         "publisher":{
             "type":"string",
-            "defualtValue": "canonical",
+            "defaultValue": "canonical",
             "allowedValues":[
                 "canonical",
                 "OpenLogic"
