@@ -8,10 +8,10 @@ wget https://raw.githubusercontent.com/tanewill/utils/master/myClusRun.sh
 chmod +x *
 runuser -l root -c '/home/azureuser/bin/localDeploy.sh'
 wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm 
-rpm -Uvh epel-release-7*.rpm
+rpm -Uvh epel-release-latest-7.noarch.rpm
 yum install -y nfs-utils nfs-utils-lib sshpass
 
-wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 rpm -Uvh epel-release-latest-7.noarch.rpm
-yum install -y nfs-utils nfs-utils-lib
-yum install sshpass
+runuser -l azureuser -c 'mkdir -p ~/.ssh'
+runuser -l azureuser -c "ssh-keygen -f .ssh/id_rsa -t rsa -N ''"
+runuser -l azureuser -c 'bin/authMe.sh'
