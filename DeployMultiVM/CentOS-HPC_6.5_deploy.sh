@@ -10,6 +10,7 @@ deploy_script()
   wget https://raw.githubusercontent.com/tanewill/utils/master/authMe.sh
   wget https://raw.githubusercontent.com/tanewill/utils/master/myClusRun.sh
   chmod +x *
+  chown azureuser:azureuser *
   yum install -y epel-release
   echo "############### INSTALL PACKAGES NEXT #######################"
   pwd
