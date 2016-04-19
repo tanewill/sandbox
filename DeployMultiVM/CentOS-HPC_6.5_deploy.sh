@@ -21,7 +21,7 @@ HPC_GID=7007
 #
 install_pkgs()
 {
-    pkgs="zlib zlib-devel bzip2 bzip2-devel bzip2-libs openssl openssl-devel openssl-libs gcc gcc-c++ nfs-utils rpcbind mdadm wget"
+    pkgs=" epel-release zlib zlib-devel bzip2 bzip2-devel bzip2-libs openssl openssl-devel openssl-libs gcc gcc-c++ nfs-utils rpcbind mdadm wget nfs-utils nfs-utils-lib sshpass arp-scan"
     yum -y install $pkgs
 }
 
@@ -67,8 +67,8 @@ setup_hpc_user()
 setup_env()
 {
     # Set unlimited mem lock
-    echo "$HPC_USER hard memlock unlimited" >> /etc/security/limits.conf
-    echo "$HPC_USER soft memlock unlimited" >> /etc/security/limits.conf
+    echo "azureuser hard memlock unlimited" >> /etc/security/limits.conf
+    echo "azureuser soft memlock unlimited" >> /etc/security/limits.conf
 
     # Intel MPI config for IB
     echo "# IB Config for MPI" > /etc/profile.d/hpc.sh
@@ -80,6 +80,12 @@ setup_env()
 
 first_setup()
 {
+    # disable selinux
+  sed -i 's/enforcing/disabled/g' /etc/selinux/config
+  setenforce permissive
+  echo "azureuser ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+  sed -i 's/^Defaults[ ]*requiretty/# Defaults requiretty/g' /etc/sudoers
+  
   mkdir -p /home/azureuser/bin/
   cd /home/azureuser/bin
   
@@ -88,39 +94,31 @@ first_setup()
   wget https://raw.githubusercontent.com/tanewill/utils/master/myClusRun.sh
   chmod +x *
   chown azureuser:azureuser *
-  yum install -y epel-release
-  echo "############### INSTALL PACKAGES NEXT #######################"
-  pwd
-  whoami
-  sleep 10
-  yum install -y nfs-utils nfs-utils-lib sshpass arp-scan
-  sleep 10
-  
+
   #create nodelist
   cd /home/azureuser
   echo "############### GET NODE NAMES #######################"
-  sleep 10
+
   arp-scan -I eth0 10.0.0.0/24 | grep 10.0.0 | awk '{print $1}' | tail -n+2
   arp-scan -I eth0 10.0.0.0/24 | grep 10.0.0 | awk '{print $1}' | tail -n+2 > nodenames.txt
   # ifconfig | grep 'inet addr:10.0.0.'|awk -F':' '{print $2}'|awk '{print $1}' >> nodenames.txt
-  sleep 10
+
   #setup authentication
   echo "############### AUTHENTICATE ALL MACHINES #######################"
   runuser -l azureuser -c 'mkdir -p ~/.ssh'
   runuser -l azureuser -c "echo -e  'y\n' | ssh-keygen -f .ssh/id_rsa -t rsa -N ''"
-  runuser -l azureuser -c "bin/myClusRun.sh hostname | sed '1d;$d' > test.txt"
-  runuser -l azureuser -c 'cp -f nodenames.txt nodenames.bak.txt'
-  runuser -l azureuser -c 'cp -f test.txt nodenames.txt'
-  runuser -l azureuser -c "sed -i '$ d' nodenames.txt"
+  #runuser -l azureuser -c "bin/myClusRun.sh hostname | sed '1d;$d' > test.txt"
+  #runuser -l azureuser -c 'cp -f nodenames.txt nodenames.bak.txt'
+  #runuser -l azureuser -c 'cp -f test.txt nodenames.txt'
+  #runuser -l azureuser -c "sed -i '$ d' nodenames.txt"
   runuser -l azureuser -c 'bin/authMe.sh'
 
   #test mpi
   /opt/intel/impi/5.1.3.181/bin64/mpirun -hosts testsxfvcomp0,testsxfvcomp1,testsxfvcomp2 -ppn 1 -n 3 -env I_MPI_FABRICS=shm:dapl -env I_MPI_DAPL_PROVIDER=ofa-v2-ib0 -env I_MPI_DYNAMIC_CONNECTION=0 -env I_MPI_DEBUG 5 IMB-MPI1 pingpong
 }
 
-  
-#first_setup
 install_pkgs
 #setup_shares
-setup_hpc_user
+#setup_hpc_user
 setup_env
+first_setup
