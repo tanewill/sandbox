@@ -21,7 +21,9 @@ HPC_GID=7007
 #
 install_pkgs()
 {
-    pkgs=" epel-release zlib zlib-devel bzip2 bzip2-devel bzip2-libs openssl openssl-devel openssl-libs gcc gcc-c++ nfs-utils rpcbind mdadm wget nfs-utils nfs-utils-lib sshpass arp-scan"
+    pkgs=" epel-release zlib zlib-devel bzip2 bzip2-devel bzip2-libs openssl openssl-devel openssl-libs gcc gcc-c++ nfs-utils rpcbind mdadm wget nfs-utils nfs-utils-lib"
+    yum -y install $pkgs
+    pkgs=" sshpass arp-scan"
     yum -y install $pkgs
 }
 
