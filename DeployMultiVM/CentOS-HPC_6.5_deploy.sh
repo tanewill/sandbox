@@ -30,17 +30,13 @@ deploy_script()
   #setup authentication
   echo "############### AUTHENTICATE ALL MACHINES #######################"
   runuser -l azureuser -c 'mkdir -p ~/.ssh'
-  sleep 10
   runuser -l azureuser -c "echo -e  'y\n' | ssh-keygen -f .ssh/id_rsa -t rsa -N ''"
-  sleep 10
   runuser -l azureuser -c "bin/myClusRun.sh hostname | sed '1d;$d' > test.txt"
-  sleep 10
-  runuser -l azureuser -c 'mv -f test.txt nodenames.txt'
-  sleep 10
+  runuser -l azureuser -c 'cp -f nodenames.txt nodenames.bak.txt'
+  runuser -l azureuser -c 'cp -f test.txt nodenames.txt'
   runuser -l azureuser -c "sed -i '$ d' nodenames.txt"
-  sleep 10
   runuser -l azureuser -c 'bin/authMe.sh'
-  sleep 10
+
   #test mpi
   /opt/intel/impi/5.1.3.181/bin64/mpirun -hosts testsxfvcomp0,testsxfvcomp1,testsxfvcomp2 -ppn 1 -n 3 -env I_MPI_FABRICS=shm:dapl -env I_MPI_DAPL_PROVIDER=ofa-v2-ib0 -env I_MPI_DYNAMIC_CONNECTION=0 -env I_MPI_DEBUG 5 IMB-MPI1 pingpong
 }
