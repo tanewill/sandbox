@@ -21,6 +21,7 @@ deploy_script()
   #create nodelist
   cd /home/azureuser
   echo "############### GET NODE NAMES #######################"
+  arp-scan -I eth0 10.0.0.0/24 | grep 10.0.0 | awk '{print $1}' | tail -n+2
   arp-scan -I eth0 10.0.0.0/24 | grep 10.0.0 | awk '{print $1}' | tail -n+2 > nodenames.txt
   # ifconfig | grep 'inet addr:10.0.0.'|awk -F':' '{print $2}'|awk '{print $1}' >> nodenames.txt
   sleep 10
