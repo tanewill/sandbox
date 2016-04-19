@@ -265,6 +265,6 @@
                   "commandToExecute": "[concat('bash ',variables('executeScript'),' ', parameters('masterHostName'),' ', parameters('hpcUserName'))]"
                 }
               }
-    },
+    }
     ]
 }
