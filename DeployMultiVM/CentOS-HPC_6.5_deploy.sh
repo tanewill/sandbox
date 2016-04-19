@@ -11,6 +11,10 @@ deploy_script()
   wget https://raw.githubusercontent.com/tanewill/utils/master/myClusRun.sh
   chmod +x *
   yum install -y epel-release
+  echo "############### INSTALL PACKAGES NEXT #######################"
+  pwd
+  whoami
+  sleep 10
   yum install -y nfs-utils nfs-utils-lib sshpass arp-scan
   
   
