@@ -5,7 +5,10 @@ MASTER_HOSTNAME=$1
 # Shares
 SHARE_HOME=/share/home
 SHARE_DATA=/share/data
-
+mkdir /home/hpc
+mkdir /home/hpc/data
+SHARE_HOME=/home/hpc
+SHARE_DATA=/home/hpc/data
 
 # Hpc User
 HPC_USER=$2
@@ -54,9 +57,8 @@ setup_hpc_user()
     
     # Disable tty requirement for sudo
     sed -i 's/^Defaults[ ]*requiretty/# Defaults requiretty/g' /etc/sudoers
-
-    
     #useradd -c "HPC User" -g $HPC_GROUP -d $SHARE_HOME/$HPC_USER -s /bin/bash -u $HPC_UID $HPC_USER
+    useradd -c "HPC User" -g $HPC_GROUP -d $SHARE_HOME/$HPC_USER -s /bin/bash -u $HPC_UID $HPC_USER
     
 }
 
