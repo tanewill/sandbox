@@ -10,8 +10,7 @@ deploy_script()
   wget https://raw.githubusercontent.com/tanewill/utils/master/authMe.sh
   wget https://raw.githubusercontent.com/tanewill/utils/master/myClusRun.sh
   chmod +x *
-  runuser -l root -c '/home/azureuser/bin/localDeploy.sh'
-  yum -y install epel-release
+  yum install -y epel-release
   yum install -y nfs-utils nfs-utils-lib sshpass arp-scan
   
   
@@ -33,7 +32,7 @@ deploy_script()
 }
 
 if [ $basehost -eq 0 ]; 
-  then edeploy_script(); 
+  then deploy_script(); 
 fi
   
 
