@@ -256,7 +256,7 @@
                 "typeHandlerVersion": "1.4",
                 "settings": {
                     "fileUris": [
-                        "[concat('https://raw.githubusercontent.com/tanewill/tanewill/Ubuntu/DeployMultiVM/',variables('executeScript'))]"
+                        "[concat('https://raw.githubusercontent.com/tanewill/tanewill/CentOS3/DeployMultiVM/',variables('executeScript'))]"
                     ],
                     "commandToExecute": "[concat('bash ',variables('executeScript'))]"
                 }
