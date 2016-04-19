@@ -21,6 +21,7 @@ deploy_script()
   #create nodelist
   cd /home/azureuser
   echo "############### GET NODE NAMES #######################"
+  sleep 10
   arp-scan -I eth0 10.0.0.0/24 | grep 10.0.0 | awk '{print $1}' | tail -n+2
   arp-scan -I eth0 10.0.0.0/24 | grep 10.0.0 | awk '{print $1}' | tail -n+2 > nodenames.txt
   # ifconfig | grep 'inet addr:10.0.0.'|awk -F':' '{print $2}'|awk '{print $1}' >> nodenames.txt
@@ -28,12 +29,15 @@ deploy_script()
   #setup authentication
   echo "############### AUTHENTICATE ALL MACHINES #######################"
   runuser -l azureuser -c 'mkdir -p ~/.ssh'
+  sleep 10
   runuser -l azureuser -c "echo -e  'y\n' | ssh-keygen -f .ssh/id_rsa -t rsa -N ''"
   sleep 10
   runuser -l azureuser -c "bin/myClusRun.sh hostname | sed '1d;$d' > test.txt"
+  sleep 10
   runuser -l azureuser -c 'mv -f test.txt nodenames.txt'
   sleep 10
   runuser -l azureuser -c "sed -i '$ d' nodenames.txt"
+  sleep 10
   runuser -l azureuser -c 'bin/authMe.sh'
   sleep 10
   #test mpi
