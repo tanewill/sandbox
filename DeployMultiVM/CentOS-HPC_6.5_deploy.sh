@@ -117,7 +117,7 @@ first_setup()
 }
 
   
-first_setup
+#first_setup
 install_pkgs
 #setup_shares
 setup_hpc_user
