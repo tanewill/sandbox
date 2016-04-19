@@ -253,7 +253,7 @@
         	            ],
               "copy": {
                 "name": "foo",
-                "count": "[parameters('instanceCountPerSA')]"
+                "count": "[parameters('vmCount')]"
               },
               "properties": {
                 "publisher": "Microsoft.OSTCExtensions",
