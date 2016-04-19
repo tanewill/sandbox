@@ -18,7 +18,7 @@ arp-scan -I eth0 10.0.0.0/24 | grep 10.0.0 | awk '{print $1}' | tail -n+2 > node
 
 #setup authentication
 runuser -l azureuser -c 'mkdir -p ~/.ssh'
-runuser -l azureuser -c "ssh-keygen -f .ssh/id_rsa -t rsa -N ''"
+runuser -l azureuser -c "echo -e  'y\n' | ssh-keygen -f .ssh/id_rsa -t rsa -N ''"
 runuser -l azureuser -c "bin/myClusRun.sh hostname | sed '1d;$d' > test.txt"
 runuser -l azureuser -c 'mv -f test.txt nodenames.txt'
 runuser -l azureuser -c "sed -i '$ d' nodenames.txt"
