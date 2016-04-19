@@ -32,7 +32,7 @@ deploy_script()
 }
 
 if [ $basehost -eq 0 ]; 
-  then deploy_script(); 
+  then deploy_script; 
 fi
   
 
