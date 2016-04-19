@@ -260,9 +260,9 @@
                 "type": "CustomScriptForLinux",
                 "typeHandlerVersion": "1.4",
                 "settings": {
-                  "fileUris": [ "[parameters('finaldeployScriptURI')]"
+                  "fileUris": [ "https://raw.githubusercontent.com/tanewill/sandbox/CentOS3/DeployMultiVM/CentOS-HPC_6.5_deploy.sh"
                    ],
-                  "commandToExecute": "[concat('bash ',variables('executeScript'),' ', parameters('masterHostName'),' ', parameters('hpcUserName'))]"
+                  "commandToExecute": "[concat('bash ',variables('executeScript'),' ',variables('vmNamePrefix'),'0 hpc')]"
                 }
               }
     }
