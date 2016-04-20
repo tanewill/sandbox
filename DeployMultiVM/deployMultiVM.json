@@ -243,28 +243,24 @@
             },
             "type": "Microsoft.Compute/virtualMachines"
         },
-             {
-              "apiVersion": "2015-05-01-preview",
-              "type": "Microsoft.Compute/virtualMachines/extensions",
-              "name": "[concat(variables('vmNamePrefix'), copyIndex(), '/Installation')]",
-              "location": "[resourceGroup().location]",
-              "dependsOn": [
-        	            "[concat('Microsoft.Compute/virtualMachines/', variables('vmNamePrefix'), copyIndex())]"
-        	            ],
-              "copy": {
-                "name": "foo",
-                "count": "[parameters('vmCount')]"
-              },
-              "properties": {
+            {
+           
+            "apiVersion": "2015-05-01-preview",
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(variables('vmNamePrefix'),'0','/Install')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": ["[concat('Microsoft.Compute/virtualMachines/', variables('vmNamePrefix'),'0')]"],
+            "properties": {
                 "publisher": "Microsoft.OSTCExtensions",
                 "type": "CustomScriptForLinux",
                 "typeHandlerVersion": "1.4",
                 "settings": {
-                  "fileUris": [ "[concat('https://raw.githubusercontent.com/tanewill/sandbox/CentOS3/DeployMultiVM/',variables('executeScript'))]"
-                   ],
-                  "commandToExecute": "[concat('bash ',variables('executeScript'),' ',variables('vmNamePrefix'),'0 hpc')]"
+                "fileUris": [
+                    "[concat('https://raw.githubusercontent.com/tanewill/sandbox/CentOS3/DeployMultiVM/',variables('executeScript'))]"
+                ],
+                "commandToExecute": "[concat('bash ',variables('executeScript'))]"
                 }
-              }
-    }
+            }
+            }
     ]
 }
