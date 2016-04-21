@@ -8,8 +8,8 @@ runuser -l azureuser -c 'mkdir -p /home/azureuser/.ssh'
 runuser -l azureuser -c "echo -e  'y\n' | ssh-keygen -f .ssh/id_rsa -t rsa -N ''"
 runuser -l azureuser -c 'chmod +x /home/azureuser/authMe.sh'
 mkdir -p .ssh
-echo 'Host *' >> config
-echo 'StrictHostKeyChecking no' >> config
+echo 'Host *' >> .ssh/config
+echo 'StrictHostKeyChecking no' >> .ssh/config
 chmod 400 config
 chown azureuser:azureuser config
 runuser -l azureuser -c 'bash /home/azureuser/authMe.sh'
