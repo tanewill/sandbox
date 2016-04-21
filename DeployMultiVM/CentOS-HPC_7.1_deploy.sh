@@ -11,5 +11,5 @@ mkdir -p .ssh
 echo 'Host *' >> .ssh/config
 echo 'StrictHostKeyChecking no' >> .ssh/config
 chmod 400 config
-chown azureuser:azureuser config
+chown azureuser:azureuser /home/azureuser/.ssh/config
 runuser -l azureuser -c 'bash /home/azureuser/authMe.sh'
