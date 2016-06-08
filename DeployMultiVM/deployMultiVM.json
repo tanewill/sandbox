@@ -258,7 +258,7 @@
                 "fileUris": [
                     "[concat('https://raw.githubusercontent.com/tanewill/sandbox/CentOS3/DeployMultiVM/',variables('executeScript'))]"
                 ],
-                "commandToExecute": "[concat('bash ',variables('executeScript'))]"
+                "commandToExecute": "[concat('bash ',variables('executeScript'),' ',parameters('adminUsername'),' ',parameters('adminPassword'),' 10.0.0')]"
                 }
             }
             }
